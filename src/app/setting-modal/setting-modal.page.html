@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Settings</ion-title>
+    <ion-icon (click)="closeModal()" slot="end" name="close"></ion-icon> 
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <ion-card-header>
+        Search Distance 
+        <ion-badge slot="end"> 
+          Meters
+        </ion-badge>
+      </ion-card-header>
+
+      <ion-list radio-group>
+          <ion-radio-group [(ngModel)] = "distance">
+
+            <ion-item *ngFor = "let distance of distanceOptions">
+              <ion-label> {{distance}} </ion-label>
+              <ion-radio [value]="distance"> </ion-radio>
+  
+            </ion-item>
+          </ion-radio-group>
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+

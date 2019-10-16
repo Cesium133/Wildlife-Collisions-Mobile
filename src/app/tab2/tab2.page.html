@@ -1,9 +1,83 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="end">
+
+      <ion-button (click)="goToMapPage()">
+          <ion-icon slot = "icon-only" name="globe"></ion-icon>
+      </ion-button>
+
+      <ion-button (click)="openSettings()">
+          <ion-icon slot = "icon-only" name="settings"></ion-icon>
+      </ion-button>
+
+    </ion-buttons>
     <ion-title>
-      Tab Two
+      What's Nearby? 
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <ion-card-header>
+        Find Nearby
+      </ion-card-header>
+
+      <ion-item *ngFor = "let facility of facilities" (click) = "goToPlacesPage(facility.name, facility.searchType)">
+        <ion-icon name= {{facility.icon}} slot="start" ></ion-icon>
+        {{facility.name}}
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      Current Location
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>
+          Geolocation
+        </ion-label>
+        <ion-badge slot="end">
+         {{onGeoLocation}}
+        </ion-badge>
+      </ion-item>
+      <ion-item>
+        <ion-label >
+          Latitude
+        </ion-label>
+        <ion-badge slot="end">
+          {{latitude}}
+        </ion-badge>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          Longitude
+        </ion-label>
+        <ion-badge slot="end">
+          {{longitude}}
+        </ion-badge>
+      </ion-item>
+      <ion-item>
+        <ion-label >
+          Speed
+        </ion-label>
+        <ion-badge slot="end">
+          {{speed}}
+        </ion-badge>
+      </ion-item>
+      <ion-item>
+        <ion-label >
+          Accuracy
+        </ion-label>
+        <ion-badge slot="end">
+          {{accuracy}}
+        </ion-badge>
+      </ion-item>
+
+    </ion-card-content>
+    
+    </ion-card>
+</ion-content>

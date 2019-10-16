@@ -38,9 +38,24 @@ const routes: Routes = [
         ]
       },
       {
-        path: '',
-        redirectTo: '/tabs/tab1',
-        pathMatch: 'full'
+        path: 'list',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../list/list.module').then(m => m.ListPageModule)
+          }
+        ]
+      },
+      {
+        path: 'gallery',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../gallery/gallery.module').then(m => m.GalleryPageModule)
+          }
+        ]
       }
     ]
   },
