@@ -1,9 +1,29 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>List</ion-title>
+    <ion-title>List Collisions</ion-title>
+    <ion-button slot="end">
+        <ion-icon name="globe" slot="icon-only"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-slides pager="true">
+    <ion-slide *ngFor="let record of records">
+      <ion-img src="baseURL+{{record.img_url}}" alt="No image"></ion-img>
+      <p>
+        <em>{{record.species}}</em><br>
+        {{record.gender}} <br>
+        {{record.age}} <br>
+        {{record.report_date}} <br>
+        {{record.latitude}} <br>
+        {{record.longitude}} <br>
+        {{record.location}}
+
+
+      </p>
+    </ion-slide>
+
+  </ion-slides>
 
 </ion-content>

@@ -9,15 +9,17 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SettingModalPage } from './setting-modal/setting-modal.page'
+import { SettingModalPage } from './setting-modal/setting-modal.page';
+import { HttpClientModule } from '@angular/common/http';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { ModalMapPage } from './modal-map/modal-map.page';
 
 
 @NgModule({
-  declarations: [AppComponent, SettingModalPage],
-  entryComponents: [SettingModalPage],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule],
+  declarations: [AppComponent, SettingModalPage, ModalMapPage],
+  entryComponents: [SettingModalPage, ModalMapPage],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, HttpClientModule],
   providers: [
     StatusBar,
     SplashScreen,

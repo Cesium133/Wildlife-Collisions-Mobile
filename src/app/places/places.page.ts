@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import {NavigationExtras} from '@angular/router';
+import {Geolocation} from '@ionic-native/geolocation/ngx';
 
 
 declare var google;
@@ -11,7 +13,7 @@ declare var google;
   styleUrls: ['./places.page.scss'],
 })
 export class PlacesPage implements OnInit {
-
+  @ViewChild('map', {static:true}) mapElement: ElementRef
   latitude: number;
   longitude: number;
   keyword: string;
@@ -24,24 +26,28 @@ export class PlacesPage implements OnInit {
   places: Array <any>;
   cnt: number;
 
-  constructor(private route: ActivatedRoute, public geolocation: Geolocation) { }
+  constructor(private route: ActivatedRoute, public geolocation: Geolocation, public router: Router) { }
 
   ngOnInit() {
+
     this.route.queryParams.subscribe((params) => {
       if (params) {
-        this.latitude = params.latitude;
-        this.longitude = params.longitude;
-        this.distance = parseInt(params.searchDistance);
+        this.latitude = parseFloat(params.latitude);
+        this.longitude = parseFloat(params.longitude);
+        this.distance = parseInt(params.dist);
         this.searchType = params.searchType;
         this.keyword = params.keyword;
       }
+      this.cnt = 0;
     });
 
     this.queryPlaces().then((results: Array<any>)=> {
+      this.cnt = results.length;
       for(let i = 0; i < results.length; i++) {
         this.createMarker(results[i]);
       };
       this.places = results;
+      this.cnt = results.length;
     }, status => console.log(status))
     
   }
@@ -65,13 +71,13 @@ export class PlacesPage implements OnInit {
 
 
   queryPlaces() {
-    let currentLocation = new google.maps.LatLng(this.latitude, this.longitude);
+    this.currentLocation = new google.maps.LatLng(this.latitude, this.longitude);
     let mapOptions = {
       zoom: 12,
-      center: currentLocation,
+      center: this.currentLocation,
       mapTypeId: google.maps.ROADMAP
     };
-    this.map = google.maps.Map(document.getElementById('map'), mapOptions);
+    this.map = new google.maps.Map(document.getElementById("map"), mapOptions);
     this.service = new google.maps.places.PlacesService(this.map);
     let requestObj = {
       location: this.currentLocation,
@@ -81,7 +87,7 @@ export class PlacesPage implements OnInit {
     };
     return new Promise((resolve,reject) => {
       this.service.nearbySearch(requestObj, (results, status) => {
-        if (status === google.maps.PlacesServiceStatus.OK) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
           resolve(results);
         } else {
           reject(status);
@@ -92,5 +98,18 @@ export class PlacesPage implements OnInit {
 
     
   };
+
+  goToDirectionPage(index) {
+
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        
+        origin: JSON.stringify(this.currentLocation),
+        destination: JSON.stringify(this.places[index].geometry.location)
+      }
+    }
+    this.router.navigate(['direction'], navigationExtras)
+
+  }
 
 }

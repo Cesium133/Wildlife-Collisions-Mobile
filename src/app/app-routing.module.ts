@@ -10,7 +10,9 @@ const routes: Routes = [
   { path: 'gallery', loadChildren: './gallery/gallery.module#GalleryPageModule' },
   { path: 'map', loadChildren: './map/map.module#MapPageModule' },
   { path: 'setting-modal', loadChildren: './setting-modal/setting-modal.module#SettingModalPageModule' },
-  { path: 'places', loadChildren: './places/places.module#PlacesPageModule' }
+  { path: 'places', loadChildren: './places/places.module#PlacesPageModule' },
+  { path: 'direction', loadChildren: './direction/direction.module#DirectionPageModule' },
+  { path: 'modal-map', loadChildren: './modal-map/modal-map.module#ModalMapPageModule' }
 ];
 @NgModule({
   imports: [

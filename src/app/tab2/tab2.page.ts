@@ -74,18 +74,15 @@ export class Tab2Page {
 
   goToPlacesPage(queryName:String, queryType: String) {
     // * Part III
-
     let navExtras: NavigationExtras = {
       queryParams: {
         latitude: this.latitude,
         longitude: this.longitude,
-        searchDistance: this.searchDistance,
-        searchType: this.facilities[0].searchType,
-        keyword: this.keyword
-        
+        dist: this.searchDistance,
+        searchType: queryType,
+        keyword: queryName
       }
     };
-
     this.router.navigate(['places'], navExtras);
   }
 

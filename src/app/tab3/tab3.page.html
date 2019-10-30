@@ -1,9 +1,65 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Report
+      Report Collisions
     </ion-title>
+    <ion-icon id="locateIcon" name="locate" slot="end" (click)="openModalMapPage()"></ion-icon>
+
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ion-text color="primary">
+    <h6>{{pageMessage}}</h6>
+  </ion-text>
+  <div *ngIf="showForm">
+    <form [formGroup]="form">
+      <ion-item>
+        <ion-label color="primary" position="stacked">
+          Select Species
+        </ion-label>
+        <ion-select formControlName="species" onChange="onChangeSpecies()" >
+          <ion-select-option *ngFor="let sort of sorts" [value]="sort">{{sort}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="showOtherInput">
+        <ion-item>
+          <ion-label color="secondary" position="stacked">Enter Other Species</ion-label>
+          <ion-input formControlName="txtSpecies" type="text" position="stacked" placeholder="Enter name of species"></ion-input>
+        </ion-item>
+      </div>
+      <ion-item>
+        <ion-label color="secondary" posiion="stacked">Report Date</ion-label>
+        <ion-datetime formControlName="reportDate" displayFormat="YYYY/MM/DD HH:mm"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-input formControlName="address" position="stacked" type="text" placeholder="Enter address of incident"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="secondary" posiion="stacked">Latitude</ion-label>
+        <ion-input formControlName="latitude" type="number" position="stacked" min="-90" max="90"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="secondary" posiion="stacked">Longitude</ion-label>
+        <ion-input formControlName="longitude" type="number" position="stacked" min="-180" max="180"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" position="stacked">Gender</ion-label>
+        <ion-select formControlName="gender">
+          <ion-select-option *ngFor="let gender of genders" [value]="gender">{{gender}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" position="stacked">Age</ion-label>
+        <ion-select formControlName="age">
+          <ion-select-option *ngFor="let age of ageClasses" [value]="age">{{age}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-button expand="block" [disabled] = "!form.valid" (click)="insertCollisions()">Submit</ion-button>
+        <ion-button expand="block" (click)="initializeFields()">Reset</ion-button>
+      </ion-item>
+
+    </form>
+  </div>
+</ion-content>
